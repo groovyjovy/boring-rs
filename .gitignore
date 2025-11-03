@@ -1,1 +1,7 @@
 target/
+boring_structs_210.rs
+boring_structs_300.rs
+boring_structs_400.rs
+.claude/
+CLAUDE.md
+.DS_Store
