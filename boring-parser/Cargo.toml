@@ -1,10 +1,12 @@
 [package]
 name = "boring-parser"
-version = "0.1.0"
-edition = "2024"
-authors = ["Haruto sasaki <muromisann6633@gmail.com>"]
-description = "A Rust library for parsing XML files"
-license = "MIT"
+authors.workspace = true
+description.workspace = true
+license.workspace = true
+repository.workspace = true
+readme.workspace = true
+edition.workspace = true
+version.workspace = true
 
 [dependencies]
 quick-xml = { version = "0.31", features = ["serialize"] }

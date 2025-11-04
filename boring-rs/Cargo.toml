@@ -1,12 +1,12 @@
 [package]
 name = "boring-rs"
-version = "0.1.0"
-edition = "2024"
-authors = ["Haruto sasaki<muromisann6633@gmail.com>"]
-description = "A Rust library for boring xml parsing"
-license = "MIT"
-repository = "https://github.com/groovyjovy/boring-rs"
-readme = "../README.md"
+authors.workspace = true
+description.workspace = true
+license.workspace = true
+repository.workspace = true
+readme.workspace = true
+edition.workspace = true
+version.workspace = true
 
 [dependencies]
 boring-file = { version = "0.1.0", path = "../boring-file" }
