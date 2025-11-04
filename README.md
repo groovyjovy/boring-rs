@@ -12,45 +12,21 @@
 
 ## 使い方
 
-### ビルド
+### CLI
 
 ```bash
-cargo build --release
+cargo install boring-rs
+
+boring-rs --input-file ./docs/dtd/BED0110.XML --output-file output.json
 ```
 
-### 実行
+### Library
 
-```bash
-./target/release/columnar-section-converter -i <入力XMLファイル> --output-file <出力JSONファイル>
-
-# 例
-./target/release/columnar-section-converter -i docs/dtd/BED0110.XML --output-file boring.json
+``` rs
+use boring_parser::{boring_structs_110::Boring110, parser::Parse};
+let boring_110 = Boring110::parse_from_str(&utf8_str); // Result<Boring110, Box<dyn std::error::Error>>
 ```
 
-## JSON出力形式
-
-### 空要素と要素なしの扱い
-
-- **要素なし**: `null`
-- **空要素** (`<tag/>`または`<tag></tag>`): `""`（空文字列）
-
-例：
-```xml
-<エンジン>
-  <エンジン_名称>エンジンA</エンジン_名称>
-  <エンジン_能力></エンジン_能力>  <!-- 空要素 -->
-</エンジン>
-```
-
-↓ JSON
-
-```json
-{
-  "エンジン_名称": "エンジンA",
-  "エンジン_能力": ""
-}
-```
-
-## 開発
+## 出力仕様
 
 実装仕様は`spec.md`を参照してください。
