@@ -9,5 +9,5 @@ repository = "https://github.com/groovyjovy/boring-rs"
 readme = "../README.md"
 
 [dependencies]
-file = { version = "0.1.0", path = "../file" }
-parser = { version = "0.1.0", path = "../parser" }
+boring-file = { version = "0.1.0", path = "../boring-file" }
+boring-parser = { version = "0.1.0", path = "../boring-parser" }

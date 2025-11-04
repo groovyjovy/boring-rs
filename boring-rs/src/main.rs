@@ -1,7 +1,7 @@
-use file::reader::FileReader;
-use file::writer::FileWriter;
-use parser::parser::extract_dtd_version;
-use parser::{boring_structs_110::Boring110, parser::Parse};
+use boring_file::reader::FileReader;
+use boring_file::writer::FileWriter;
+use boring_parser::parser::extract_dtd_version;
+use boring_parser::{boring_structs_110::Boring110, parser::Parse};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = FileReader::from_args();

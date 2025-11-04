@@ -1,5 +1,5 @@
 [package]
-name = "parser"
+name = "boring-parser"
 version = "0.1.0"
 edition = "2024"
 authors = ["Haruto sasaki <muromisann6633@gmail.com>"]
