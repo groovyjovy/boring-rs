@@ -54,7 +54,7 @@ dependencies = [
 
 [[package]]
 name = "boring-file"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "clap",
  "encoding_rs",
@@ -64,7 +64,7 @@ dependencies = [
 
 [[package]]
 name = "boring-parser"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "quick-xml",
  "serde",
@@ -73,7 +73,7 @@ dependencies = [
 
 [[package]]
 name = "boring-rs"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "boring-file",
  "boring-parser",

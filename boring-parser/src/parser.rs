@@ -1,4 +1,7 @@
 use crate::boring_structs_110::Boring110;
+use crate::boring_structs_210::Boring210;
+use crate::boring_structs_300::Boring300;
+use crate::boring_structs_400::Boring400;
 use crate::error::ParseError;
 use quick_xml::Reader;
 use quick_xml::de::from_str;
@@ -17,11 +20,53 @@ impl Parse<Boring110> for Boring110 {
     }
 }
 
+impl Parse<Boring210> for Boring210 {
+    fn parse_from_str(xml_str: &str) -> Result<Boring210, Box<dyn std::error::Error>> {
+        let boring: Boring210 = from_str(xml_str)?;
+        Ok(boring)
+    }
+}
+
+impl Parse<Boring300> for Boring300 {
+    fn parse_from_str(xml_str: &str) -> Result<Boring300, Box<dyn std::error::Error>> {
+        let boring: Boring300 = from_str(xml_str)?;
+        Ok(boring)
+    }
+}
+
+impl Parse<Boring400> for Boring400 {
+    fn parse_from_str(xml_str: &str) -> Result<Boring400, Box<dyn std::error::Error>> {
+        let boring: Boring400 = from_str(xml_str)?;
+        Ok(boring)
+    }
+}
+
 pub trait ToXml {
     fn to_xml_string(&self) -> Result<String, Box<dyn std::error::Error>>;
 }
 
 impl ToXml for Boring110 {
+    fn to_xml_string(&self) -> Result<String, Box<dyn std::error::Error>> {
+        let xml = to_string(&self)?;
+        Ok(xml)
+    }
+}
+
+impl ToXml for Boring210 {
+    fn to_xml_string(&self) -> Result<String, Box<dyn std::error::Error>> {
+        let xml = to_string(&self)?;
+        Ok(xml)
+    }
+}
+
+impl ToXml for Boring300 {
+    fn to_xml_string(&self) -> Result<String, Box<dyn std::error::Error>> {
+        let xml = to_string(&self)?;
+        Ok(xml)
+    }
+}
+
+impl ToXml for Boring400 {
     fn to_xml_string(&self) -> Result<String, Box<dyn std::error::Error>> {
         let xml = to_string(&self)?;
         Ok(xml)
