@@ -81,7 +81,7 @@ checksum = "812e12b5285cc515a9c72a5c1d3b6d46a19dac5acfef5265968c166106e31dd3"
 
 [[package]]
 name = "boring-file"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "clap",
  "encoding_rs",
@@ -91,7 +91,7 @@ dependencies = [
 
 [[package]]
 name = "boring-parser"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "proj",
  "quick-xml",
@@ -101,7 +101,7 @@ dependencies = [
 
 [[package]]
 name = "boring-rs"
-version = "0.2.0"
+version = "0.2.1"
 dependencies = [
  "boring-file",
  "boring-parser",
