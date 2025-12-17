@@ -93,6 +93,8 @@ dependencies = [
 name = "boring-parser"
 version = "0.2.1"
 dependencies = [
+ "encoding_rs",
+ "jgdtrans",
  "proj",
  "quick-xml",
  "serde",
@@ -262,6 +264,12 @@ name = "itoa"
 version = "1.0.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4a5f13b858c8d314ee3e8f639011f7ccefe71f97f96e50151fb991f267928e2c"
+
+[[package]]
+name = "jgdtrans"
+version = "0.3.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "184e8e0a9aef34bcfa31118e6e8290d865698e73e5225982bb1591ad910d6fbc"
 
 [[package]]
 name = "libc"
