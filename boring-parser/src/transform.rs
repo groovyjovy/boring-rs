@@ -145,11 +145,14 @@ pub fn read_param_file<P: AsRef<Path>>(path: P) -> Result<String, std::io::Error
 /// Tokyo Datum/JGD2000からJGD2011への変換を行う。
 /// - Step 1: Tokyo Datum → JGD2000 (TKY2JGD)
 /// - Step 2: JGD2000 → JGD2011 (PatchJGD統合)
+/// - Step 3: JGD2011 → WGS84 (proj)
 pub struct JgdTransformer {
     /// Tokyo Datum → JGD2000 変換器
     tky_tf: Transformer<ParData>,
     /// JGD2000 → JGD2011 統合変換器 (水平+垂直)
     unified_tf: Transformer<ParData>,
+    /// JGD2011 → WGS84 変換器 (キャッシュ)
+    jgd2011_to_wgs84: proj::Proj,
 }
 
 impl JgdTransformer {
@@ -185,7 +188,10 @@ impl JgdTransformer {
 
         let unified_tf = Self::create_unified_transformer(patch_dir, Some(survey_date))?;
 
-        Ok(Self { tky_tf, unified_tf })
+        let jgd2011_to_wgs84 = proj::Proj::new_known_crs("EPSG:6668", "EPSG:4326", None)
+            .map_err(|e| TransformError::Transform(format!("proj init error: {}", e)))?;
+
+        Ok(Self { tky_tf, unified_tf, jgd2011_to_wgs84 })
     }
 
     /// パラメータファイルを読み込んで変換器を初期化（調査日なし）
@@ -204,7 +210,10 @@ impl JgdTransformer {
         // 調査日なしの場合、地震補正は適用しない（ジオイド補正のみ）
         let unified_tf = Self::create_unified_transformer(patch_dir, None)?;
 
-        Ok(Self { tky_tf, unified_tf })
+        let jgd2011_to_wgs84 = proj::Proj::new_known_crs("EPSG:6668", "EPSG:4326", None)
+            .map_err(|e| TransformError::Transform(format!("proj init error: {}", e)))?;
+
+        Ok(Self { tky_tf, unified_tf, jgd2011_to_wgs84 })
     }
 
     /// TKY2JGDのみで変換器を初期化 (PatchJGDファイルなし)
@@ -221,7 +230,10 @@ impl JgdTransformer {
             ParData::with_description(Format::PatchJGD_HV, empty_params, "Empty".to_string());
         let unified_tf = Transformer::new(empty_data);
 
-        Ok(Self { tky_tf, unified_tf })
+        let jgd2011_to_wgs84 = proj::Proj::new_known_crs("EPSG:6668", "EPSG:4326", None)
+            .map_err(|e| TransformError::Transform(format!("proj init error: {}", e)))?;
+
+        Ok(Self { tky_tf, unified_tf, jgd2011_to_wgs84 })
     }
 
     /// ディレクトリ内のパラメータファイルを加算マージして1つのTransformerを作る
@@ -452,6 +464,30 @@ impl JgdTransformer {
     ) -> Result<(f64, f64, f64), TransformError> {
         let result = self.transform_point(lat, lon, alt, system_code)?;
         Ok((result.latitude, result.longitude, result.altitude))
+    }
+
+    /// 座標をWGS84に変換 (水平座標のみ)
+    ///
+    /// Tokyo Datum/JGD2000 → JGD2011 → WGS84 の変換を行う。
+    ///
+    /// # Arguments
+    /// * `lat` - 緯度 (度, 10進数)
+    /// * `lon` - 経度 (度, 10進数)
+    /// * `system_code` - 測地系コード ("00"=Tokyo, "01"=JGD2000, "02"=JGD2011)
+    ///
+    /// # Returns
+    /// 変換後の (経度, 緯度) - WGS84座標
+    pub fn to_wgs84(
+        &self,
+        lat: f64,
+        lon: f64,
+        system_code: &str,
+    ) -> Option<(f64, f64)> {
+        // Step 1-2: Tokyo/JGD2000 → JGD2011
+        let (lat_jgd2011, lng_jgd2011) = self.transform_horizontal(lat, lon, system_code)?;
+
+        // Step 3: JGD2011 → WGS84 (キャッシュ済みprojを使用)
+        self.jgd2011_to_wgs84.convert((lng_jgd2011, lat_jgd2011)).ok()
     }
 
     /// 内部変換処理

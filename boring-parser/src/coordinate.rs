@@ -105,13 +105,8 @@ impl GeoLocation {
         let lat = self.latitude.to_decimal()?;
         let system_code = self.geodetic_system.as_deref().unwrap_or("02");
 
-        // Step 1: Tokyo/JGD2000 → JGD2011
-        let (lat_jgd2011, lng_jgd2011) =
-            transformer.transform_horizontal(lat, lng, system_code)?;
-
-        // Step 2: JGD2011 (EPSG:6668) → WGS84 (EPSG:4326)
-        let proj = proj::Proj::new_known_crs("EPSG:6668", "EPSG:4326", None).ok()?;
-        proj.convert((lng_jgd2011, lat_jgd2011)).ok()
+        // Tokyo/JGD2000 → JGD2011 → WGS84 (キャッシュ済みprojを使用)
+        transformer.to_wgs84(lat, lng, system_code)
     }
 
     /// 10進数座標を取得 (変換なし)
