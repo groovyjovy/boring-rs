@@ -6,3 +6,4 @@ pub mod coordinate;
 pub mod error;
 pub mod parser;
 pub mod transform;
+pub mod types;

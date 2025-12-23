@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
 
+use crate::types::FreeInfo;
+
 // ============================================================================
 // ルート構造体
 // ============================================================================
@@ -390,7 +392,7 @@ pub struct Core210 {
     #[serde(default, rename = "備考")] // * (0回以上)
     pub remarks: Vec<Remark210>,
     #[serde(default, rename = "フリー情報")] // * (0回以上)
-    pub free_info: Vec<String>,
+    pub free_info: Vec<FreeInfo>,
 }
 
 // ============================================================================

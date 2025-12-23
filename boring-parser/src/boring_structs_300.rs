@@ -2,6 +2,7 @@ use serde::{Deserialize, Serialize};
 
 // v2.10の構造体を流用
 use crate::boring_structs_210::*;
+use crate::types::FreeInfo;
 
 // ============================================================================
 // ルート構造体
@@ -179,7 +180,7 @@ pub struct Core300 {
     #[serde(default, rename = "備考")]
     pub remarks: Vec<Remark210>,
     #[serde(default, rename = "フリー情報")]
-    pub free_info: Vec<String>,
+    pub free_info: Vec<FreeInfo>,
 }
 
 // ============================================================================

@@ -1,6 +1,8 @@
 use serde::{Deserialize, Serialize};
 use std::str;
 
+use crate::types::FreeInfo;
+
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(rename = "ボーリング情報")]
 pub struct Boring110 {
@@ -271,7 +273,7 @@ pub struct Core {
     #[serde(default, rename = "断層区分")]
     pub fault_classification: Vec<FaultClassification>,
     #[serde(default, rename = "フリー情報")]
-    pub free_info: Vec<String>,
+    pub free_info: Vec<FreeInfo>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
