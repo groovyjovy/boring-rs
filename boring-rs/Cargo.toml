@@ -9,5 +9,5 @@ edition.workspace = true
 version.workspace = true
 
 [dependencies]
-boring-file = { version = "0.3.0", path = "../boring-file" }
-boring-parser = { version = "0.3.0", path = "../boring-parser" }
+boring-file = { version = "0.4.0", path = "../boring-file" }
+boring-parser = { version = "0.4.0", path = "../boring-parser" }
