@@ -1,4 +1,5 @@
 use crate::boring_structs_110::Boring110;
+use crate::boring_structs_200::Boring200;
 use crate::boring_structs_210::Boring210;
 use crate::boring_structs_300::Boring300;
 use crate::boring_structs_400::Boring400;
@@ -16,6 +17,13 @@ pub trait Parse<T> {
 impl Parse<Boring110> for Boring110 {
     fn parse_from_str(xml_str: &str) -> Result<Boring110, Box<dyn std::error::Error>> {
         let boring: Boring110 = from_str(xml_str)?;
+        Ok(boring)
+    }
+}
+
+impl Parse<Boring200> for Boring200 {
+    fn parse_from_str(xml_str: &str) -> Result<Boring200, Box<dyn std::error::Error>> {
+        let boring: Boring200 = from_str(xml_str)?;
         Ok(boring)
     }
 }
@@ -46,6 +54,13 @@ pub trait ToXml {
 }
 
 impl ToXml for Boring110 {
+    fn to_xml_string(&self) -> Result<String, Box<dyn std::error::Error>> {
+        let xml = to_string(&self)?;
+        Ok(xml)
+    }
+}
+
+impl ToXml for Boring200 {
     fn to_xml_string(&self) -> Result<String, Box<dyn std::error::Error>> {
         let xml = to_string(&self)?;
         Ok(xml)

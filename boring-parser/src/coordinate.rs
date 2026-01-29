@@ -180,6 +180,25 @@ impl GeoCoordinate for crate::boring_structs_300::Boring300 {
     }
 }
 
+impl GeoCoordinate for crate::boring_structs_200::Boring200 {
+    fn geo_location(&self) -> GeoLocation {
+        let lng_lat = &self.title.longitude_latitude;
+        GeoLocation {
+            longitude: DmsCoordinate {
+                degree: lng_lat.longitude_degree.clone(),
+                minute: lng_lat.longitude_minute.clone(),
+                second: lng_lat.longitude_second.clone(),
+            },
+            latitude: DmsCoordinate {
+                degree: lng_lat.latitude_degree.clone(),
+                minute: lng_lat.latitude_minute.clone(),
+                second: lng_lat.latitude_second.clone(),
+            },
+            geodetic_system: lng_lat.geodetic_system.clone(),
+        }
+    }
+}
+
 impl GeoCoordinate for crate::boring_structs_210::Boring210 {
     fn geo_location(&self) -> GeoLocation {
         let lng_lat = &self.title.longitude_latitude;
